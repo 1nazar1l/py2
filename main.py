@@ -6,11 +6,12 @@ import smtplib
 env.read_env()
 
 password = env("PASSWORD")
-mail = env("MAIL")
+mail_from = env("MAIL_FROM")
+mail_to = env("MAIL_TO")
 
 msg = MIMEMultipart()
-msg["From"] = mail
-msg["To"] = mail
+msg["From"] = mail_from
+msg["To"] = mail_to
 msg["Subject"] = "Test"
 
 module_in_process = ["Основы python", "GitHub", "API"]
@@ -26,6 +27,6 @@ msg.as_string()
 
 server = smtplib.SMTP_SSL("smtp.yandex.com", 465)
 
-server.login(mail, password=password)
+server.login(mail_from, password=password)
 server.sendmail(msg["From"], msg["To"], msg.as_string())
 server.quit()
